@@ -55,7 +55,8 @@ for row in spellTableSoup.find_all('tr'):
         if column.name == 'td':
             for child in column.children:
                 if child.name == 'a' and not _row:
-                    _row.append(webSiteRoot+str(child['href']))
+                    spellLink = '=HYPERLINK("%s", "%s")' %(webSiteRoot+str(child['href']), str(child.string))
+                    _row.append(spellLink)
                 elif child.name == 'a':
                     _row.append(str(child.string))
                 if child.name == 'img':
