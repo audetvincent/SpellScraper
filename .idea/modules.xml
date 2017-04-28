@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../Spell Scraper/.idea/Spell Scrapper.iml" filepath="$PROJECT_DIR$/../Spell Scraper/.idea/Spell Scrapper.iml" />
+      <module fileurl="file://D:\Users\Vincent\Documents\Spell Scraper\.idea\Spell Scrapper.iml" filepath="D:\Users\Vincent\Documents\Spell Scraper\.idea\Spell Scrapper.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/SpellScraper.iml" filepath="$PROJECT_DIR$/.idea/SpellScraper.iml" />
     </modules>
   </component>

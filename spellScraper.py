@@ -10,18 +10,22 @@ import sys
 
 LEVELS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 webSiteRoot = "https://dndtools.net"
-webSitePath = webSiteRoot + "/spells/?rulebook__dnd_edition__slug=core-35&rulebook__dnd_edition__slug=supplementals-35&page_size=1000"
+webSitePath = webSiteRoot + "/spells/?rulebook__dnd_edition__slug=core-35&rulebook__dnd_edition__slug=supplementals-35"
+
 class_input = input("Please specified the class to fetch: ")
+class_input = class_input.lower()
+
 classSitePath = webSitePath + '&class_levels__slug=' + class_input
 level_input = input("Now please specified every levels you wish to get the spells from (comma separated): ")
 
 for e in level_input:
     if str(e) in LEVELS:
-        levelSitePath = classSitePath +'&spellclasslevel__level=' + e
+        levelSitePath = classSitePath + '&spellclasslevel__level=' + e + "&page_size=1000"
         _filename = class_input + '_level_' + e + '.csv'
 
         ofile = open(_filename, "w")
-        writer = csv.writer(ofile, delimiter=' ')
+        # fields = ['Spell Name', 'Spell School', 'Verbal', 'Somatic', 'Material', 'Arcane Focus', 'Divine Focus', 'Experience', 'Rulebook Name', 'Edition']
+        writer = csv.writer(ofile, delimiter=',', lineterminator='\n', dialect='excel')
 
         # 'https://dndtools.net/spells/?rulebook__dnd_edition__slug=core-35&rulebook__dnd_edition__slug=supplementals-35&class_levels__slug=druid&spellclasslevel__level=0&spellclasslevel__level=1'
         res = requests.get(levelSitePath)
