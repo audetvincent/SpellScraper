@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/python3
 # spellScraper.py - Launches a browser to go fetch spells from the selected class and level.
 #
 
@@ -7,6 +7,14 @@ import bs4
 import lxml
 import csv
 import sys
+import platform
+
+if (platform.system() != "Windows"):
+  dialect = 'unix'
+  delimiter = ";"
+else:
+  dialect = 'excel'
+  delimiter = ","
 
 LEVELS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 webSiteRoot = "https://dndtools.net"
@@ -25,7 +33,7 @@ for e in level_input:
 
         ofile = open(_filename, "w")
         # fields = ['Spell Name', 'Spell School', 'Verbal', 'Somatic', 'Material', 'Arcane Focus', 'Divine Focus', 'Experience', 'Rulebook Name', 'Edition']
-        writer = csv.writer(ofile, delimiter=',', lineterminator='\n', dialect='excel')
+        writer = csv.writer(ofile, delimiter=",", lineterminator='\n', dialect=dialect)
 
         # 'https://dndtools.net/spells/?rulebook__dnd_edition__slug=core-35&rulebook__dnd_edition__slug=supplementals-35&class_levels__slug=druid&spellclasslevel__level=0&spellclasslevel__level=1'
         res = requests.get(levelSitePath)
@@ -53,7 +61,7 @@ for e in level_input:
                 if column.name == 'td':
                     for child in column.children:
                         if child.name == 'a' and not _row:
-                            spellLink = '=HYPERLINK("%s", "%s")' %(webSiteRoot+str(child['href']), str(child.string))
+                            spellLink = '=HYPERLINK("%s"%s "%s")' %(webSiteRoot+str(child['href']), delimiter, str(child.string))
                             _row.append(spellLink)
                         elif child.name == 'a':
                             _row.append(str(child.string))
